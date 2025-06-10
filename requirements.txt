@@ -1,0 +1,8 @@
+streamlit>=1.28.0
+google-generativeai>=0.3.0
+PyMuPDF>=1.23.0
+requests>=2.31.0
+arxiv>=1.4.0
+pandas>=2.0.0
+plotly>=5.15.0
+duckduckgo-search>=3.9.0
