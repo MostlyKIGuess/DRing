@@ -89,7 +89,8 @@ class UnifiedResearchPage:
         if st.session_state.get('uploaded_documents'):
             st.markdown("---")
             st.markdown("### Previous Documents")
-            for i, doc in enumerate(st.session_state.uploaded_documents[-3:]):  # Show last 3
+            max_docs = st.session_state.get('max_analyzed_documents', 10) 
+            for i, doc in enumerate(st.session_state.uploaded_documents[-max_docs:]):  # Show the max docs the user kept 
                 col1, col2 = st.columns([3, 1])
                 with col1:
                     st.caption(f"File: {doc['name']} ({doc['uploaded_at']})")

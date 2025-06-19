@@ -86,6 +86,18 @@ class UIComponents:
             if session_summary.strip() != "**Current Session Summary:**\n- Documents analyzed: 0\n- Related papers found: 0\n- Chat messages: 0\n- Highlights: 0":
                 with st.expander("Current Session", expanded=False):
                     st.markdown(session_summary)
+                    
+                    analyzed_docs = st.session_state.get('analyzed_documents', [])
+                    if analyzed_docs:
+                        st.markdown("**Analyzed Documents:**")
+                        for i, doc in enumerate(analyzed_docs):
+                            col1, col2 = st.columns([3, 1])
+                            with col1:
+                                st.text(f"• {doc['name']} ({doc['analyzed_at']})")
+                            with col2:
+                                if st.button("Remove", key=f"remove_doc_{i}", use_container_width=True):
+                                    st.session_state.analyzed_documents.pop(i)
+                                    st.rerun()
             
             col1, col2 = st.columns(2)
             with col1:
@@ -115,6 +127,9 @@ class UIComponents:
                         st.rerun()
             
             with st.expander("Advanced Options"):
+                max_docs = st.slider("Max Documents to Track", 3, 20, 10, 
+                                    help="Maximum number of analyzed documents to keep in session")
+                st.session_state.max_analyzed_documents = max_docs
                 highlight_color = st.color_picker("Highlight Color", "#FFFF00")
             
             return {

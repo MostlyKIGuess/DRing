@@ -513,11 +513,10 @@ class ChatContextManager:
             else:
                 st.session_state.analyzed_documents.append(doc_entry)
             
-            # Limit to last 3 documents to avoid too much context 
-            # TODO : Make this configurable
-            # or allow user to clear context
-            if len(st.session_state.analyzed_documents) > 3:
-                st.session_state.analyzed_documents = st.session_state.analyzed_documents[-3:]
+            # Limit documents to avoid too much context (configurable)
+            max_docs = st.session_state.get('max_analyzed_documents', 10) 
+            if len(st.session_state.analyzed_documents) > max_docs:
+                st.session_state.analyzed_documents = st.session_state.analyzed_documents[-max_docs:]
         
         # Build context from all analyzed documents
         if st.session_state.get('analyzed_documents'):
